@@ -126,7 +126,7 @@ Two things worth knowing before you start, both learned the hard way:
 
 ## Improving context retrieval
 
-The open problem is [issue #1](../../issues/1): recall is 57%, the target is 80%.
+The open problem is [issue #2](../../issues/2): recall is 57%, the target is 80%.
 
 Where the signal comes from today, in `src/context/`:
 
