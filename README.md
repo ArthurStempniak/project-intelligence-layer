@@ -32,7 +32,7 @@ O pacote resultante vai direto para o Claude, ChatGPT ou qualquer agente:
 ## Por que existe
 
 Mandar o repositório inteiro para um LLM custa caro, estoura a janela de
-contexto e **piora** a resposta — o modelo se perde em código irrelevante. As
+contexto e **piora** a resposta o modelo se perde em código irrelevante. As
 alternativas usuais têm limites conhecidos: busca por embeddings ignora a
 estrutura do código, e `grep` não sabe quem chama quem.
 
@@ -41,7 +41,7 @@ classes, componentes, endpoints), relações (importa, chama, herda, testa) e
 confiança declarada em cada aresta. A seleção de contexto navega esse grafo.
 
 Feito para quem escreve tarefas em **português** sobre código com
-identificadores em inglês — um desencontro que quebra busca lexical ingênua e
+identificadores em inglês um desencontro que quebra busca lexical ingênua e
 que teve tratamento específico aqui (cognatos, acentuação, dicionário de
 domínio).
 
@@ -90,7 +90,7 @@ time to context  160ms (p95 373ms)       meta <2s    ✓
 
 **O critério de saída da Fase 1 não foi atingido**: o recall está a três quartos
 do caminho. Os 5 casos que ainda falham são edições de conteúdo/apresentação
-descritas em vocabulário que não aparece em identificador — o sinal que resolve
+descritas em vocabulário que não aparece em identificador o sinal que resolve
 isso é similaridade semântica de texto, ou seja, embeddings (Fase 2). O histórico
 completo das medições, com o que cada mudança ensinou, está em
 `docs/BENCHMARK.md`.
@@ -102,7 +102,7 @@ completo das medições, com o que cada mudança ensinou, está em
   externo.
 
 As quatro dependências de execução são as gramáticas tree-sitter e o runtime
-WASM, todas com `.wasm` pré-compilado — nenhuma exige node-gyp/MSVC, que é onde
+WASM, todas com `.wasm` pré-compilado nenhuma exige node-gyp/MSVC, que é onde
 a instalação costuma falhar no Windows.
 
 ## Como rodar
@@ -143,7 +143,7 @@ Para canalizar o contexto direto a um agente:
 pil context "adicionar desconto progressivo" --raw | claude -p
 ```
 
-`--raw` imprime só o pacote, sem relatório — qualquer texto de relatório na saída
+`--raw` imprime só o pacote, sem relatório qualquer texto de relatório na saída
 viraria contexto espúrio para o modelo.
 
 ### Benchmark
@@ -164,7 +164,7 @@ pil context "terminar a validacao de CNPJ" --raw | Set-Clipboard
 ```
 
 Mas ele descreve o código como está *indexado*. Quando você parou no meio de
-uma alteração, o que mais importa é o que você já mudou — e isso o PIL não sabe,
+uma alteração, o que mais importa é o que você já mudou e isso o PIL não sabe,
 o git sabe. `examples/pil-continuar.ps1` junta os dois:
 
 ```powershell
@@ -202,7 +202,7 @@ Mantenha a lista curta e específica do projeto: um dicionário amplo foi medido
 `src/core/lexicon.ts` para copiar e recortar.
 
 Exemplo real: num projeto onde a conexão vive num `db.js`, a tarefa
-"corrigir a conexão com o banco de dados" não encontrava o arquivo — `db` e
+"corrigir a conexão com o banco de dados" não encontrava o arquivo `db` e
 "banco de dados" não são cognatos. Com o grupo
 `["db", "banco", "dados", "conexao", "pool"]` declarado, os arquivos de conexão
 passaram a ocupar as primeiras posições.
@@ -215,7 +215,7 @@ intactos; `--rebuild` força a releitura quando necessário.
 
 ### Comandos ainda não implementados
 
-`ask`, `graph`, `analyze`, `migrate`, `export` — falham indicando a fase do
+`ask`, `graph`, `analyze`, `migrate`, `export` falham indicando a fase do
 roadmap em que entram, em vez de "comando desconhecido".
 
 ## Estrutura
@@ -259,7 +259,7 @@ Três, todas documentadas com justificativa em `docs/ARCHITECTURE.md`:
 
 O modo padrão é `local`: nada sai da máquina. Arquivos de credencial (`.env`,
 chaves privadas, `.aws/`, `.ssh/`) são barrados antes de entrar no índice, e o
-motivo do descarte fica registrado — um arquivo ausente do índice sem registro é
+motivo do descarte fica registrado um arquivo ausente do índice sem registro é
 indistinguível de um bug.
 
 ## Limite conhecido
@@ -279,7 +279,7 @@ limite e vão falhar de propósito quando ele for resolvido.
 Contribuições são bem-vindas. O que ajuda mais, em ordem:
 
 1. **Rodar o PIL no seu projeto e relatar o que deu errado.** Foi assim que
-   todos os defeitos sérios apareceram — CommonJS não reconhecido, acentuação
+   todos os defeitos sérios apareceram CommonJS não reconhecido, acentuação
    quebrando a busca, nome de arquivo afogado no índice. Nenhum deles apareceu
    em teste sintético. Abra uma issue com a tarefa que você pediu e o que
    esperava receber.
@@ -294,7 +294,7 @@ Antes de abrir um PR: `npm test && npm run typecheck && npm run build`.
 Duas convenções do projeto:
 
 - **Comentário explica *por que*, não *o quê*.** Vários comentários no código
-  registram a medição que motivou a decisão — é o que impede alguém (inclusive o
+  registram a medição que motivou a decisão é o que impede alguém (inclusive o
   autor) de "simplificar" de volta para a versão errada.
 - **Número medido vence argumento.** Ordenar por densidade parecia certo na
   teoria e estava errado no objetivo; o benchmark mostrou. Um dicionário amplo de
