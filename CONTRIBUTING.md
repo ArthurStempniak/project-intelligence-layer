@@ -47,7 +47,7 @@ npm test          # 151 tests
 npm link          # makes `pil` available for manual testing
 ```
 
-Requires Node.js ≥ 22.13, for the built-in `node:sqlite`. There is no native
+Requires Node.js ≥ 22.16, for the built-in `node:sqlite`. There is no native
 dependency: `npm install` never invokes node-gyp.
 
 Before opening a PR:

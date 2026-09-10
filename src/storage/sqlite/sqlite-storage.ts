@@ -168,6 +168,26 @@ export class SqliteStorage implements Storage {
     for (const pragma of PRAGMAS) this.#db.exec(pragma);
   }
 
+  /**
+   * Traduz a ausencia de FTS5 num erro que diz o que fazer.
+   *
+   * O `node:sqlite` embutido so passou a trazer FTS5 no Node 22.16. Em versoes
+   * anteriores todo `pil scan` morria com `no such module: fts5`, mensagem que
+   * nao aponta para nada acionavel. Descoberto pela CI numa matriz de versoes,
+   * depois de o `engines` afirmar 22.13 sem nunca ter sido testado lah.
+   */
+  #exigirFts5(erro: unknown): never {
+    const mensagem = (erro as Error).message ?? String(erro);
+    if (mensagem.includes('fts5')) {
+      throw new PilError(
+        'STORAGE_ERROR',
+        `Esta versao do Node (${process.version}) nao traz FTS5 no modulo node:sqlite.`,
+        'O PIL precisa de Node 22.16 ou superior. Atualize o Node e rode `pil scan` de novo.',
+      );
+    }
+    throw erro;
+  }
+
   async migrate(options: { onVersionMismatch?: 'error' | 'recreate' } = {}): Promise<MigrateResult> {
     // Le a versao antes de aplicar o DDL: `CREATE TABLE IF NOT EXISTS` sobre um
     // schema antigo nao falha nem altera nada, e a incompatibilidade so
@@ -186,12 +206,20 @@ export class SqliteStorage implements Storage {
         );
       }
       this.#dropSchema();
-      this.#db.exec(SCHEMA_SQL);
+      try {
+        this.#db.exec(SCHEMA_SQL);
+      } catch (erro) {
+        this.#exigirFts5(erro);
+      }
       await this.setMeta(META_KEYS.schemaVersion, String(SCHEMA_VERSION));
       return { recreated: true };
     }
 
-    this.#db.exec(SCHEMA_SQL);
+    try {
+      this.#db.exec(SCHEMA_SQL);
+    } catch (erro) {
+      this.#exigirFts5(erro);
+    }
     if (existing === null) {
       await this.setMeta(META_KEYS.schemaVersion, String(SCHEMA_VERSION));
     }

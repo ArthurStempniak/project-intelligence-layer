@@ -21,9 +21,11 @@ jobs:
         # plataforma: fim de linha CRLF no hash dos arquivos, separador de
         # caminho, e a resolução dos `.wasm` do tree-sitter.
         os: [ubuntu-latest, windows-latest]
-        # 22.13 é o mínimo declarado em `engines`; a versão atual pega
-        # regressões do `node:sqlite`, que ainda é experimental.
-        node: [22.13, 22, 24]
+        # 22.16 e o minimo real, medido: e a primeira 22.x cujo `node:sqlite`
+        # embutido traz FTS5. O `engines` dizia 22.13, que falha em todo
+        # `pil scan` com `no such module: fts5`. A versao atual de cada linha
+        # pega regressoes do `node:sqlite`, que ainda e experimental.
+        node: ['22.16', 22, 24]
 
     steps:
       - uses: actions/checkout@v4

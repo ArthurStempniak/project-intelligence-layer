@@ -36,7 +36,7 @@
   "homepage": "https://github.com/ArthurStempniak/project-intelligence-layer#readme",
   "type": "module",
   "engines": {
-    "node": ">=22.13.0"
+    "node": ">=22.16.0"
   },
   "bin": {
     "pil": "./dist/cli/bin.js"

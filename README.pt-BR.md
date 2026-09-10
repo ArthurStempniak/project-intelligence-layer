@@ -6,7 +6,7 @@
 Reduz os tokens enviados ao LLM selecionando só o contexto que a tarefa precisa.
 
 ![licença MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-blue)
-![Node 22+](https://img.shields.io/badge/node-%E2%89%A522.13-brightgreen)
+![Node 22+](https://img.shields.io/badge/node-%E2%89%A522.16-brightgreen)
 ![151 testes](https://img.shields.io/badge/testes-151-brightgreen)
 ![sem dependência nativa](https://img.shields.io/badge/build-sem%20node--gyp-brightgreen)
 
@@ -99,7 +99,7 @@ completo das medições, com o que cada mudança ensinou, está em
 
 ## Requisitos
 
-- **Node.js ≥ 22.13**: o projeto usa o `node:sqlite` embutido.
+- **Node.js ≥ 22.16**: o projeto usa o `node:sqlite` embutido.
 - Nada além disso: sem banco para instalar, sem compilador C++, sem serviço
   externo.
 

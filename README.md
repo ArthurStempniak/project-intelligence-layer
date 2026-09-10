@@ -31,7 +31,7 @@ demo can be regenerated from the actual CLI with
 [`assets/demo.tape`](assets/demo.tape) and [vhs](https://github.com/charmbracelet/vhs).
 
 ![MIT license](https://img.shields.io/badge/license-MIT-blue)
-![Node 22+](https://img.shields.io/badge/node-%E2%89%A522.13-brightgreen)
+![Node 22+](https://img.shields.io/badge/node-%E2%89%A522.16-brightgreen)
 ![151 tests](https://img.shields.io/badge/tests-151-brightgreen)
 ![no native build](https://img.shields.io/badge/build-no%20node--gyp-brightgreen)
 
@@ -79,7 +79,7 @@ Pipe it straight into an agent:
 pil context "add progressive discount" --raw | claude -p
 ```
 
-Requires **Node.js ≥ 22.13** and nothing else. No database to install, no C++
+Requires **Node.js ≥ 22.16** and nothing else. No database to install, no C++
 compiler, no service to sign up for. Everything runs locally: your code never
 leaves the machine.
 
