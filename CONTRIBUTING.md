@@ -164,7 +164,24 @@ If you make something slower, say so and why in the PR.
 
 ## Writing tests
 
-Tests are in `tests/unit/`, run with `vitest`. Two conventions:
+Tests are in `tests/unit/`, run with **vitest**:
+
+```ts
+import { describe, expect, it } from 'vitest';
+```
+
+Two mistakes CI now blocks, both from a real pull request:
+
+**Do not use `node:test`.** Vitest collects the file, finds no suite it
+recognises, and reports `No test suite found`. Typecheck stays clean, so 62
+lines of assertions can sit in the repo and never execute.
+
+**Do not import from `src/cli/bin.ts`.** It calls `main()` at module top level,
+because that is what a CLI entrypoint does, so importing it runs the whole
+command. A utility that needs testing belongs in its own module under
+`src/cli/`, imported by `bin.ts`.
+
+Two conventions:
 
 **A comment on a test says why the case exists**, ideally the failure that
 motivated it. Several tests in this repo document a specific real-world bug, and

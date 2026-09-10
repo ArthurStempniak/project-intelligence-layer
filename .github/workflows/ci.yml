@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Uma PR que reescreve a branch cancela a execução anterior: não faz sentido
+# gastar runner terminando de testar um commit que já foi substituído.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # Windows e Linux porque o projeto tem armadilhas específicas de
+        # plataforma: fim de linha CRLF no hash dos arquivos, separador de
+        # caminho, e a resolução dos `.wasm` do tree-sitter.
+        os: [ubuntu-latest, windows-latest]
+        # 22.13 é o mínimo declarado em `engines`; a versão atual pega
+        # regressões do `node:sqlite`, que ainda é experimental.
+        node: [22.13, 22, 24]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      # Uma suíte que colete zero teste passa silenciosamente no vitest quando
+      # o arquivo usa outro runner. Já aconteceu numa PR real: 62 linhas de
+      # teste que nunca executaram, com o typecheck limpo.
+      - name: Guard against test files that never run
+        shell: bash
+        run: |
+          if grep -rlE "from ['\"]node:test['\"]" tests/; then
+            echo "::error::Test files must use vitest, not node:test."
+            echo "A file importing from 'node:test' is collected by vitest as"
+            echo "'No test suite found' and its assertions never execute."
+            exit 1
+          fi
+
+      # `bin.ts` executa `main()` no topo, porque e isso que um entrypoint de
+      # CLI faz. A consequencia e que importa-lo dispara o comando inteiro,
+      # entao nenhum teste pode importar dele: utilitario testavel mora em
+      # modulo proprio. Aconteceu numa PR real, e foi o que levou o autor a usar
+      # outro runner para escapar do efeito colateral.
+      - name: Tests must not import from the CLI entrypoint
+        shell: bash
+        run: |
+          if grep -rl "cli/bin" tests/; then
+            echo "::error::Tests must not import from src/cli/bin.ts."
+            echo "It runs main() on import. Move the utility to its own module."
+            exit 1
+          fi
