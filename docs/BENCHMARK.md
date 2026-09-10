@@ -82,8 +82,8 @@ Precisão      0.31
 Time to ctx   740ms  (p95: 1.2s)
 
 Piores casos (recall baixo):
-  a3f9c21  "corrige upload de anexo na ocorrência"   0.33  (1/3 arquivos)
-  7d10b8e  "ajusta filtro de filial no BI"           0.50  (2/4 arquivos)
+  a3f9c21  "corrige upload de anexo"                 0.33  (1/3 arquivos)
+  7d10b8e  "ajusta filtro do relatório mensal"       0.50  (2/4 arquivos)
 ```
 
 A lista de piores casos é a parte útil do relatório. A média diz se houve
@@ -169,13 +169,13 @@ genérica é ruído.
 
 Os 5 casos que ainda falham são todos do mesmo tipo:
 
-| Commit | Tarefa | Alvo |
+| Tipo de tarefa | Alvo | Por que falha |
 |---|---|---|
-| (commit privado) | tarefa de conteúdo/copy | `(public)/page.tsx` |
-| (commit privado) | tarefa de conteúdo/copy | `(public)/page.tsx` |
-| (commit privado) | tarefa de conteúdo/copy | página de dashboard |
-| (commit privado) | tarefa de conteúdo/copy | página de perfil |
-| (commit privado) | tarefa de conteúdo/copy | componente de BI |
+| atualizar texto de depoimentos | landing page grande | vocabulário só existe no conteúdo, e em outro idioma |
+| corrigir âncoras de navegação | landing page grande | nenhum símbolo citado, nenhuma chamada envolvida |
+| atualizar texto informativo | página de dashboard | tarefa descreve o que o usuário vê, não o código |
+| exibir dados de assinatura e cobrança | página de perfil | `billing`/`cobrança` não são cognatos |
+| corrigir tipagem de um formatador | componente de BI | alvo é uma linha dentro de um arquivo grande |
 
 São edições de *conteúdo e apresentação* em páginas grandes, descritas em
 vocabulário que não aparece em identificador nem casa por cognato
