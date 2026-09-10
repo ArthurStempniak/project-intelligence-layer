@@ -24,7 +24,11 @@ each coding task.
 └──────────────────────────────────────────┘
 ```
 
-That is a real measurement on a real 421-file project, not an illustration.
+<img src="assets/demo.svg" alt="PIL scanning a 421-file project, selecting 12 files as context, and running impact analysis" width="900">
+
+Those are real numbers from a real 421-file project, not an illustration. The
+demo can be regenerated from the actual CLI with
+[`assets/demo.tape`](assets/demo.tape) and [vhs](https://github.com/charmbracelet/vhs).
 
 ![MIT license](https://img.shields.io/badge/license-MIT-blue)
 ![Node 22+](https://img.shields.io/badge/node-%E2%89%A522.13-brightgreen)

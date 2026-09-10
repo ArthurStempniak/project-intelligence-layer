@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 687" width="900" height="687" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="14">
+<style>
+text{white-space:pre}
+.cmd{fill:#7ee787;font-weight:600}
+.txt{fill:#c9d1d9}
+.dim{fill:#6e7681}
+.ok{fill:#3fb950;font-weight:600}
+.sel{fill:#79c0ff}
+.warn{fill:#d29922;font-weight:600}
+.big{fill:#3fb950;font-weight:700;font-size:15px}
+.l0{opacity:0;animation:a0 15.379999999999999s infinite}@keyframes a0{0%,0.00%{opacity:0}0.01%,100%{opacity:1}}
+.l1{opacity:0;animation:a1 15.379999999999999s infinite}@keyframes a1{0%,2.73%{opacity:0}2.74%,100%{opacity:1}}
+.l2{opacity:0;animation:a2 15.379999999999999s infinite}@keyframes a2{0%,5.46%{opacity:0}5.47%,100%{opacity:1}}
+.l3{opacity:0;animation:a3 15.379999999999999s infinite}@keyframes a3{0%,8.19%{opacity:0}8.20%,100%{opacity:1}}
+.l4{opacity:0;animation:a4 15.379999999999999s infinite}@keyframes a4{0%,10.92%{opacity:0}10.93%,100%{opacity:1}}
+.l5{opacity:0;animation:a5 15.379999999999999s infinite}@keyframes a5{0%,13.65%{opacity:0}13.66%,100%{opacity:1}}
+.l6{opacity:0;animation:a6 15.379999999999999s infinite}@keyframes a6{0%,16.38%{opacity:0}16.39%,100%{opacity:1}}
+.l7{opacity:0;animation:a7 15.379999999999999s infinite}@keyframes a7{0%,19.12%{opacity:0}19.13%,100%{opacity:1}}
+.l8{opacity:0;animation:a8 15.379999999999999s infinite}@keyframes a8{0%,21.85%{opacity:0}21.86%,100%{opacity:1}}
+.l9{opacity:0;animation:a9 15.379999999999999s infinite}@keyframes a9{0%,24.58%{opacity:0}24.59%,100%{opacity:1}}
+.l10{opacity:0;animation:a10 15.379999999999999s infinite}@keyframes a10{0%,27.31%{opacity:0}27.32%,100%{opacity:1}}
+.l11{opacity:0;animation:a11 15.379999999999999s infinite}@keyframes a11{0%,30.04%{opacity:0}30.05%,100%{opacity:1}}
+.l12{opacity:0;animation:a12 15.379999999999999s infinite}@keyframes a12{0%,32.77%{opacity:0}32.78%,100%{opacity:1}}
+.l13{opacity:0;animation:a13 15.379999999999999s infinite}@keyframes a13{0%,35.50%{opacity:0}35.51%,100%{opacity:1}}
+.l14{opacity:0;animation:a14 15.379999999999999s infinite}@keyframes a14{0%,38.23%{opacity:0}38.24%,100%{opacity:1}}
+.l15{opacity:0;animation:a15 15.379999999999999s infinite}@keyframes a15{0%,40.96%{opacity:0}40.97%,100%{opacity:1}}
+.l16{opacity:0;animation:a16 15.379999999999999s infinite}@keyframes a16{0%,43.69%{opacity:0}43.70%,100%{opacity:1}}
+.l17{opacity:0;animation:a17 15.379999999999999s infinite}@keyframes a17{0%,46.42%{opacity:0}46.43%,100%{opacity:1}}
+.l18{opacity:0;animation:a18 15.379999999999999s infinite}@keyframes a18{0%,49.15%{opacity:0}49.16%,100%{opacity:1}}
+.l19{opacity:0;animation:a19 15.379999999999999s infinite}@keyframes a19{0%,51.89%{opacity:0}51.90%,100%{opacity:1}}
+.l20{opacity:0;animation:a20 15.379999999999999s infinite}@keyframes a20{0%,54.62%{opacity:0}54.63%,100%{opacity:1}}
+.l21{opacity:0;animation:a21 15.379999999999999s infinite}@keyframes a21{0%,57.35%{opacity:0}57.36%,100%{opacity:1}}
+.l22{opacity:0;animation:a22 15.379999999999999s infinite}@keyframes a22{0%,60.08%{opacity:0}60.09%,100%{opacity:1}}
+.l23{opacity:0;animation:a23 15.379999999999999s infinite}@keyframes a23{0%,62.81%{opacity:0}62.82%,100%{opacity:1}}
+.l24{opacity:0;animation:a24 15.379999999999999s infinite}@keyframes a24{0%,65.54%{opacity:0}65.55%,100%{opacity:1}}
+.l25{opacity:0;animation:a25 15.379999999999999s infinite}@keyframes a25{0%,68.27%{opacity:0}68.28%,100%{opacity:1}}
+.l26{opacity:0;animation:a26 15.379999999999999s infinite}@keyframes a26{0%,71.00%{opacity:0}71.01%,100%{opacity:1}}
+.l27{opacity:0;animation:a27 15.379999999999999s infinite}@keyframes a27{0%,73.73%{opacity:0}73.74%,100%{opacity:1}}
+.l28{opacity:0;animation:a28 15.379999999999999s infinite}@keyframes a28{0%,76.46%{opacity:0}76.47%,100%{opacity:1}}
+</style>
+<rect width="900" height="687" rx="10" fill="#0d1117"/>
+<rect width="900" height="34" rx="10" fill="#161b22"/>
+<rect y="24" width="900" height="10" fill="#161b22"/>
+<circle cx="20" cy="17" r="6" fill="#ff5f57"/><circle cx="40" cy="17" r="6" fill="#febc2e"/><circle cx="60" cy="17" r="6" fill="#28c840"/>
+<text x="450" y="22" text-anchor="middle" class="dim" font-size="12">PIL — Project Intelligence Layer</text>
+<text class="cmd l0" x="24" y="73">$ pil scan</text>
+<text class="dim l1" x="24" y="94">  [421/421] backend/services/leadAutoSync.js</text>
+<text class="ok l2" x="24" y="115">✓ scan concluido em 38.8s</text>
+<text class="dim l3" x="24" y="136"></text>
+<text class="txt l4" x="24" y="157">  adicionados  421</text>
+<text class="txt l5" x="24" y="178">  entidades    6.171</text>
+<text class="txt l6" x="24" y="199">  relacoes     29.258</text>
+<text class="txt l7" x="24" y="220">  resolvidas   599 exact  6.394 scoped  5.022 ambiguas</text>
+<text class="dim l8" x="24" y="241"></text>
+<text class="cmd l9" x="24" y="262">$ pil context "corrigir a conexao com o banco de dados" --budget 8000</text>
+<text class="dim l10" x="24" y="283"></text>
+<text class="txt l11" x="24" y="304">  projeto inteiro  1.884.846 tokens</text>
+<text class="txt l12" x="24" y="325">  selecionado          7.591 tokens</text>
+<text class="dim l13" x="24" y="346"></text>
+<text class="big l14" x="24" y="367">  ████████████████████  99.6% de reducao</text>
+<text class="dim l15" x="24" y="388"></text>
+<text class="txt l16" x="24" y="409">  arquivos   12 de 421</text>
+<text class="txt l17" x="24" y="430">  tempo      220ms</text>
+<text class="dim l18" x="24" y="451"></text>
+<text class="sel l19" x="24" y="472">   35  full   backend/config/db.js#VARIABLE:pool</text>
+<text class="sel l20" x="24" y="493">   34  full   backend/config/db.js#FILE</text>
+<text class="sel l21" x="24" y="514">   43  full   backend/config/ixcDb.js#VARIABLE:poolCosmo</text>
+<text class="dim l22" x="24" y="535"></text>
+<text class="cmd l23" x="24" y="556">$ pil impact "calculateCommission" --min-confidence 0.6</text>
+<text class="dim l24" x="24" y="577"></text>
+<text class="txt l25" x="24" y="598">  chamadores diretos     1</text>
+<text class="txt l26" x="24" y="619">  chamadores indiretos  10</text>
+<text class="txt l27" x="24" y="640">  arquivos afetados      4</text>
+<text class="warn l28" x="24" y="661">  RISCO  MEDIUM   11 chamadores em 4 arquivos</text>
+</svg>
