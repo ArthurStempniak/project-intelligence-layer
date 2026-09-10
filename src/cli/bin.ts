@@ -14,7 +14,7 @@ import './warnings.js';
 import { readFile } from 'node:fs/promises';
 import { parseArgs } from 'node:util';
 
-import { isPilError } from '../core/errors.js';
+import { PilError, isPilError } from '../core/errors.js';
 import { bold, dim, red, yellow } from './output.js';
 import { cmdInit, cmdScan, cmdStatus } from './commands/scan.js';
 import { cmdContext, cmdImpact } from './commands/query.js';
@@ -80,18 +80,43 @@ const OPTIONS = {
  * justamente o caso de uso de `--include`, então o penhasco ficava exatamente
  * onde a opção é mais útil.
  */
-async function readIncludes(
+export async function readIncludes(
   inline: string[] | undefined,
   fromFile: string | undefined,
 ): Promise<string[] | undefined> {
   const paths = [...(inline ?? [])];
 
   if (fromFile !== undefined) {
-    const content = await readFile(fromFile, 'utf8');
+    let content: string;
+    try {
+      content = await readFile(fromFile, 'utf8');
+    } catch (error) {
+      if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
+        throw new PilError(
+          'CONFIG_INVALID',
+          `arquivo de lista não encontrado: ${fromFile}`,
+          'Informe um arquivo com um caminho por linha.',
+        );
+      }
+      throw error;
+    }
+
+    let filePathsCount = 0;
     for (const line of content.split(/\r?\n/)) {
       const trimmed = line.trim();
       // Linha vazia e `#` permitem gerar o arquivo com comentário sem quebrar.
-      if (trimmed !== '' && !trimmed.startsWith('#')) paths.push(trimmed);
+      if (trimmed !== '' && !trimmed.startsWith('#')) {
+        paths.push(trimmed);
+        filePathsCount++;
+      }
+    }
+
+    if (filePathsCount === 0) {
+      throw new PilError(
+        'CONFIG_INVALID',
+        `arquivo de lista está vazio: ${fromFile}`,
+        'Informe um arquivo com um caminho por linha.',
+      );
     }
   }
 
@@ -108,7 +133,7 @@ function toNumber(value: string | undefined, flag: string): number | undefined {
   return parsed;
 }
 
-async function main(argv: string[]): Promise<number> {
+export async function main(argv: string[]): Promise<number> {
   const { values, positionals } = parseArgs({
     args: argv,
     options: OPTIONS,
