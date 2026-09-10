@@ -136,7 +136,7 @@ edits described in vocabulary that appears nowhere in the code. No structural
 signal points at them: no symbol cited, no call, no import. That needs semantic
 text similarity, which means embeddings.
 
-Getting to 80% is [issue #1](../../issues/1). It is a measurable, open technical
+Getting to 80% is [issue #2](../../issues/2). It is a measurable, open technical
 problem, and the benchmark harness is in the repo so anyone can verify a claim.
 
 ## Built for tasks in one language, code in another
