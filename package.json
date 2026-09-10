@@ -1,0 +1,72 @@
+{
+  "name": "pil",
+  "version": "0.1.0",
+  "description": "Camada de inteligencia contextual entre codigo-fonte e agentes de IA: indexa o projeto, monta um grafo de dependencias e seleciona apenas o contexto necessario para cada tarefa, reduzindo drasticamente os tokens enviados ao LLM.",
+  "keywords": [
+    "contexto",
+    "ia",
+    "llm",
+    "tokens",
+    "codigo",
+    "analise-de-codigo",
+    "grafo-de-dependencias",
+    "ast",
+    "tree-sitter",
+    "cli",
+    "context-engine",
+    "code-context",
+    "code-intelligence",
+    "token-reduction",
+    "dependency-graph",
+    "static-analysis",
+    "ai-agents",
+    "rag",
+    "typescript",
+    "python"
+  ],
+  "license": "MIT",
+  "author": "Arthur Stempniak",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArthurStempniak/project-intelligence-layer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ArthurStempniak/project-intelligence-layer/issues"
+  },
+  "homepage": "https://github.com/ArthurStempniak/project-intelligence-layer#readme",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "bin": {
+    "pil": "./dist/cli/bin.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "demo": "npm run build && node --no-warnings examples/demo.mjs",
+    "pil": "node --no-warnings ./dist/cli/bin.js",
+    "bench": "npm run build && node --no-warnings ./dist/bench/bin.js"
+  },
+  "dependencies": {
+    "tree-sitter-javascript": "^0.25.0",
+    "tree-sitter-python": "^0.25.0",
+    "tree-sitter-typescript": "^0.23.2",
+    "web-tree-sitter": "^0.27.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
+}

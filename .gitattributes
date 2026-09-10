@@ -1,0 +1,13 @@
+# Normaliza fim de linha no repositório: LF no commit, nativo no working tree.
+# Sem isto, um contribuidor em Linux vê o arquivo inteiro como alterado só pelo
+# CRLF do Windows, e o diff fica ilegível.
+* text=auto eol=lf
+
+# O .wasm e binários não devem sofrer conversão nenhuma.
+*.wasm binary
+*.png binary
+*.db binary
+
+# .ps1 precisa de BOM e CRLF: o PowerShell 5.1 lê como ANSI sem BOM e os
+# acentos viram mojibake.
+*.ps1 text eol=crlf working-tree-encoding=UTF-8
