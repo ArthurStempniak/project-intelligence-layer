@@ -4,7 +4,7 @@
 
 O critério de sucesso da spec §33 é "reduzir >80% sem perder o necessário". A
 primeira metade é trivial de fingir: enviar nada reduz 100%. A segunda metade é
-que exige medição — e sem ela qualquer ajuste no Relevance Engine vira palpite.
+que exige medição, e sem ela qualquer ajuste no Relevance Engine vira palpite.
 
 Por isso o harness de benchmark é entregável de **Fase 1**, não de Fase 2.
 
@@ -43,10 +43,10 @@ tarefa, não pela mensagem original. Para reproduzir num projeto seu:
 
 Nem todo commit serve como caso de teste. Excluir:
 
-- **merges** — o diff não corresponde a uma tarefa;
-- **commits com >20 arquivos** — em geral renomeação em massa ou formatação, cuja
+- **merges**: o diff não corresponde a uma tarefa;
+- **commits com >20 arquivos**: em geral renomeação em massa ou formatação, cuja
   mensagem não descreve uma tarefa de engenharia;
-- **mensagens genéricas** (`wip`, `fix`, `ajustes`) — não há tarefa a interpretar,
+- **mensagens genéricas** (`wip`, `fix`, `ajustes`): não há tarefa a interpretar,
   e medir contra elas mede ruído;
 - **commits só de config/lockfile**.
 
@@ -73,7 +73,7 @@ alteração correta. Penalizar isso otimizaria contra o objetivo do produto.
 ## Formato de saída
 
 ```
-PIL BENCHMARK — meu-projeto
+PIL BENCHMARK: meu-projeto
 Commits avaliados: 50   (de 312 após filtros)
 
 Recall@20k    0.84   ████████████████░░░░
@@ -87,7 +87,7 @@ Piores casos (recall baixo):
 ```
 
 A lista de piores casos é a parte útil do relatório. A média diz se houve
-regressão; os piores casos dizem *onde* consertar — e é neles que se descobre
+regressão; os piores casos dizem *onde* consertar, e é neles que se descobre
 qual sinal está faltando.
 
 ## Benchmark sintético
@@ -136,7 +136,7 @@ o recall está a três quartos do caminho.
 ### O que cada passo ensinou
 
 **Ordenar por densidade era um erro de objetivo, não de matemática.** Densidade
-(score/tokens) é o ótimo do knapsack fracionário para maximizar *score total* —
+(score/tokens) é o ótimo do knapsack fracionário para maximizar *score total*:
 mas o objetivo do PIL é incluir as poucas entidades que a tarefa toca. Maximizar
 a soma premiava encher o pacote de fragmentos baratos: 22 arquivos selecionados
 onde 1 importava.
@@ -162,7 +162,7 @@ levou a precisão de 2% para 32%.
 aplicado por padrão derrubou a precisão de 22% para 7% e o recall de 57% para
 55%: expandir cada termo para 3–5 sinônimos multiplica candidatos, e o ranking
 não sabe qual era o pretendido. O mecanismo ficou, vazio por padrão e
-configurável — um dicionário curado pelo dono do projeto é preciso onde a lista
+configurável: um dicionário curado pelo dono do projeto é preciso onde a lista
 genérica é ruído.
 
 ### Por que o recall para em 57%
@@ -182,7 +182,7 @@ vocabulário que não aparece em identificador nem casa por cognato
 (`billing`/`cobrança`, `subscription`/`assinatura`). Nenhum sinal estrutural
 aponta para lá: não há símbolo citado, não há chamada, não há import.
 
-O sinal que resolve isso é **similaridade semântica de texto** — embeddings, a
+O sinal que resolve isso é **similaridade semântica de texto**: embeddings, a
 Fase 2. Continuar empilhando heurística contra 14 casos seria ajustar ao gabarito
 em vez de melhorar o motor.
 

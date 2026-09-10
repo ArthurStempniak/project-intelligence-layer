@@ -1,4 +1,4 @@
-# Relevance Engine — algoritmo inicial
+# Relevance Engine: algoritmo inicial
 
 ## O problema com a fórmula da spec §12
 
@@ -14,7 +14,7 @@ Três problemas concretos:
 
 1. **As parcelas têm faixas incompatíveis.** BM25 é ilimitado e negativo,
    distância de grafo é inteira e *menor é melhor*, "é exportado" é booleano.
-   Somar isso não produz 0–100 — produz um número cuja escala varia com o
+   Somar isso não produz 0–100: produz um número cuja escala varia com o
    projeto, o que impede comparar execuções e, portanto, impede medir regressão.
 2. **A unidade está trocada.** O exemplo pontua arquivos, mas a spec §15 comprime
    símbolos. Orçar por arquivo desperdiça: um `service.ts` de 800 linhas entra
@@ -36,7 +36,7 @@ score = 100 × Σ(peso_i × sinal_i) / Σ(peso_i)
 ```
 
 A renormalização importa: `semantic` vale 0 no MVP (sem embeddings), e sem
-dividir pela soma efetiva todos os scores ficariam artificialmente deprimidos —
+dividir pela soma efetiva todos os scores ficariam artificialmente deprimidos:
 o que faria um corte por limiar absoluto se comportar de forma diferente na
 Fase 1 e na Fase 2, sem que a qualidade do ranking tivesse mudado.
 
@@ -56,7 +56,7 @@ Fase 1 e na Fase 2, sem que a qualidade do ranking tivesse mudado.
 
 **Os pesos não são verdade revelada.** São ponto de partida a ser calibrado
 contra o corpus de commits reais (ver `BENCHMARK.md`). O valor deste desenho não
-está nos números — está no fato de que os números viraram *falsificáveis*.
+está nos números: está no fato de que os números viraram *falsificáveis*.
 
 ## Pipeline
 
@@ -88,7 +88,7 @@ nenhuma pontuação recuperaria o que ela deixou de fora.
 
 O orçamento é em tokens, não em número de itens. Pegar os melhores por score
 gasta o orçamento em entidades grandes e caras; ordenar por `score / tokens`
-maximiza relevância por token gasto — que é literalmente a função-objetivo do
+maximiza relevância por token gasto, que é literalmente a função-objetivo do
 produto.
 
 O guloso por densidade não é ótimo (o problema é NP-difícil), mas fica dentro de
@@ -110,11 +110,11 @@ Uma entidade não é só "entra ou não entra". Ela entra em um de três níveis
 Isso transforma o corte binário em degradação gradual: com orçamento apertado, um
 vizinho cai de `FULL` para `SIGNATURE` em vez de sumir. Preservar a *existência*
 de uma dependência custa ~15 tokens e evita que o agente reescreva algo que já
-existe — o modo de falha mais caro de um contexto reduzido.
+existe: o modo de falha mais caro de um contexto reduzido.
 
 ## Diagnóstico obrigatório
 
 `ContextPackage.omitted` guarda o que foi considerado e cortado, com score e
 custo. Sem isso não há como distinguir "o motor não achou" de "o motor achou e o
-orçamento cortou" — que exigem correções opostas: a primeira é problema de
+orçamento cortou", que exigem correções opostas: a primeira é problema de
 recuperação, a segunda de orçamento.

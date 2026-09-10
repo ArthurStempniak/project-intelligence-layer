@@ -17,7 +17,7 @@ Isso implica duas métricas acopladas, e a segunda é a que dá honestidade à p
 
 Otimizar uma sem a outra é trivial e inútil. O critério de sucesso (spec §33) só
 tem sentido como par: **>80% de redução mantendo recall alto**. Todo o desenho
-abaixo existe para tornar esse par mensurável — ver `BENCHMARK.md`.
+abaixo existe para tornar esse par mensurável: ver `BENCHMARK.md`.
 
 ## 2. Camadas
 
@@ -59,19 +59,19 @@ privado, na máquina do desenvolvedor.
 
 O grafo não precisa de banco de grafos (a própria spec §5 alerta contra isso), e
 também não precisa de Postgres: uma CTE recursiva sobre uma tabela de arestas
-resolve travessia com filtro de tipo, profundidade e confiança — implementado e
+resolve travessia com filtro de tipo, profundidade e confiança, implementado e
 testado em `sqlite-storage.ts`.
 
 **Mitigação do risco:** toda persistência passa pela interface `Storage`, que é
 **assíncrona mesmo com driver síncrono**. Um adapter Postgres é obrigatoriamente
 assíncrono; espremer isso depois obrigaria a reescrever todos os chamadores. O
-custo hoje é um `await` supersticioso — o custo de não fazer é o retrabalho que a
+custo hoje é um `await` supersticioso: o custo de não fazer é o retrabalho que a
 escolha do SQLite existia para evitar.
 
 ### 3.2 `node:sqlite` em vez de `better-sqlite3`
 
 Elimina a única dependência nativa do projeto (sem node-gyp/MSVC), que é onde a
-instalação costuma falhar no Windows — a plataforma deste projeto. API
+instalação costuma falhar no Windows: a plataforma deste projeto. API
 praticamente idêntica; a troca ficaria contida em `sqlite/driver.ts`.
 
 **Custo aceito:** o módulo é experimental no Node 22 e emite warning. Consequência
@@ -84,14 +84,14 @@ resolver um pacote npm inexistente. Resolvido isolando o carregamento em
 
 `web-tree-sitter` com gramáticas `.wasm` pré-compiladas, em vez dos bindings
 nativos. Mesma razão: nenhum compilador na instalação. Parsing não é o gargalo do
-MVP — a indexação incremental é que decide o desempenho percebido.
+MVP: a indexação incremental é que decide o desempenho percebido.
 
 ### 3.4 Fastify adiado
 
 A spec §5 lista Fastify, mas o MVP da spec §30 é só CLI e o dashboard é Fase 3.
 Um servidor HTTP hoje traria auth, ciclo de vida e porta configurável para zero
 consumidores. O requisito real ("preparado para web") se atende mantendo o core
-como biblioteca — o que já está feito.
+como biblioteca: o que já está feito.
 
 ### 3.5 Sem dependências de conveniência
 
@@ -110,7 +110,7 @@ não se resolve `obj.metodo()` com `obj` de tipo desconhecido, reflexão, injeç
 de dependência ou binding por string.
 
 Se o grafo tratar um palpite por nome com a mesma confiança de um import
-explícito, o `pil impact` produz resultado errado com aparência de certeza — pior
+explícito, o `pil impact` produz resultado errado com aparência de certeza: pior
 do que não responder.
 
 | Tier | Confiança | Critério |
@@ -126,7 +126,7 @@ de "quem talvez chame". A saída da CLI exibe o tier, nunca só o número.
 
 ### Chamada em membro: o receptor decide
 
-`obj.metodo()` é o caso difícil, e rebaixar todos eles não serve — em TS e Python
+`obj.metodo()` é o caso difícil, e rebaixar todos eles não serve: em TS e Python
 quase toda chamada é em membro, e o grafo inteiro viraria AMBIGUOUS. O que
 importa é se o receptor é **conhecido sintaticamente**:
 
@@ -138,8 +138,8 @@ importa é se o receptor é **conhecido sintaticamente**:
 | `qualquerCoisa.x()` | AMBIGUOUS | sem inferência de tipo, o receptor é opaco |
 
 Isto veio de um falso positivo encontrado rodando `pil impact` sobre o próprio
-PIL: `this.#db.prepare(...).run(...)` casava por nome com `Indexer.run` — único
-`run` do índice — e recebia SCOPED/0.75. O relatório passava a listar métodos do
+PIL: `this.#db.prepare(...).run(...)` casava por nome com `Indexer.run`, único
+`run` do índice, e recebia SCOPED/0.75. O relatório passava a listar métodos do
 `SqliteStorage` como chamadores do indexador, com confiança alta sobre uma
 coincidência de nome.
 
@@ -148,7 +148,7 @@ coincidência de nome.
 A unidade de invalidação é o **arquivo**; a de seleção é a **entidade**.
 
 ```
-disco → (mtime + tamanho iguais?) → sim: nem lê o arquivo
+disco → (mtime + tamanho iguais?) → sim, nem lê o arquivo
                                   → não: lê, hasheia
                                           → hash igual?  sim: reaproveita
                                                          não: reparse
@@ -161,7 +161,7 @@ numa reindexação completa. O hash decide.
 ### O invariante delicado: rebaixar em vez de apagar
 
 Ao reindexar um arquivo, arestas vindas de **outros** arquivos que apontavam para
-entidades dele voltam a `UNRESOLVED` **preservando `targetHint`** — não são
+entidades dele voltam a `UNRESOLVED` **preservando `targetHint`**: não são
 apagadas. Uma aresta apagada perde a pista e nunca mais volta a resolver: o índice
 perderia conectividade a cada edição, silenciosamente. A promoção acontece pelo
 lado do alvo, porque o arquivo de origem pode nunca mais ser reindexado. Ambos os
@@ -180,13 +180,13 @@ lados têm teste dedicado.
 
 ## 7. Decisões deliberadamente adiadas
 
-- **Embeddings / busca semântica** — Fase 2. Ver a ressalva do §10: o FTS
+- **Embeddings / busca semântica**: Fase 2. Ver a ressalva do §10, o FTS
   resolve a barreira de *forma* (identificador colado vs. palavras separadas),
   mas não a de *idioma*.
-- **Postgres + pgvector** — Fase 5, quando houver multiusuário de verdade.
-- **Dashboard** — Fase 3. O core já é consumível por HTTP quando existir.
-- **Migration Engine** — Fase 4, e re-escopado: ver §8.
-- **Workers / paralelismo** — só depois que o benchmark apontar o gargalo.
+- **Postgres + pgvector**: Fase 5, quando houver multiusuário de verdade.
+- **Dashboard**: Fase 3. O core já é consumível por HTTP quando existir.
+- **Migration Engine**: Fase 4, e re-escopado, ver §8.
+- **Workers / paralelismo**: só depois que o benchmark apontar o gargalo.
   Paralelizar antes de medir é adivinhação.
 
 ## 8. Ressalva sobre o Migration Engine (spec §20/21)
@@ -229,24 +229,24 @@ Não resolve a barreira de **idioma**:
 ```
 
 `comissão` e `commission` são palavras distintas para o FTS. Nenhum stemmer ou
-remoção de acento aproxima as duas — é tradução, não normalização.
+remoção de acento aproxima as duas: é tradução, não normalização.
 
 Isso importa porque descreve exatamente a situação real do usuário deste projeto:
 tarefas escritas em português sobre bases de código com identificadores em inglês.
-No corpus do benchmark — um SaaS de gestão em português — esse é o caso comum,
+No corpus do benchmark: um SaaS de gestão em português, esse é o caso comum,
 não a exceção.
 
 **Consequência para o roadmap:** o sinal `lexical` sozinho não sustenta o recall
 da Fase 1 nesse cenário. Três saídas, em ordem de custo:
 
-1. **Sementes por outros sinais** — símbolos citados literalmente na tarefa
+1. **Sementes por outros sinais**: símbolos citados literalmente na tarefa
    (o usuário costuma escrever `calculateCommission` quando sabe o nome),
    caminhos em `--include`, e arquivos recém-alterados no git. Não depende de
    idioma. É o mais barato e entra na Fase 1.
-2. **Dicionário de domínio** — mapa configurável em `.pil/config.json`
+2. **Dicionário de domínio**: mapa configurável em `.pil/config.json`
    (`comissão→commission`, `vendedor→seller`) expandindo a consulta. Barato,
    explícito, e o usuário controla. Cobre o vocabulário recorrente do projeto.
-3. **Embeddings multilíngues** — resolve o caso geral, mas custa indexação e
+3. **Embeddings multilíngues**: resolve o caso geral, mas custa indexação e
    dependência de modelo. Fase 2.
 
 A ordem não é arbitrária: (1) e (2) são verificáveis pelo benchmark antes de
@@ -267,7 +267,7 @@ Resultado do primeiro scan: **0 resoluções EXACT em 29.258 relações.**
 O extrator só reconhecia `import ... from`. Em CommonJS, `require('./repo')` é
 uma `call_expression` como qualquer outra, então o índice tinha 730 arestas
 `CALLS → require` e **nenhuma** aresta `IMPORTS`. Sem grafo de módulos não há
-prova de binding, e sem prova de binding nada pode ser EXACT — tudo desabava
+prova de binding, e sem prova de binding nada pode ser EXACT: tudo desabava
 para casamento por nome.
 
 Depois de tratar `require` como import, com os nomes ligados extraídos do
@@ -277,7 +277,7 @@ declarador: **599 EXACT**.
 
 `const axios = require('axios')` criava uma entidade `VARIABLE:axios`. Com 246
 arquivos CommonJS, o topo do ranking de contexto era `VARIABLE:axios`,
-`VARIABLE:ixcPools`, `VARIABLE:json` — 598 entidades que são apelido de módulo,
+`VARIABLE:ixcPools`, `VARIABLE:json`, 598 entidades que são apelido de módulo,
 não código que alguém edita. A relação IMPORTS já registra o vínculo.
 
 ### 11.3 A otimização de `mtime` estava documentada mas não implementada
@@ -314,7 +314,7 @@ Uma consulta real num projeto brasileiro expôs isto:
 "tela de indicação"  →  "indica"                     não casa
 ```
 
-`\w` em JavaScript é `[A-Za-z0-9_]` — `ç` e `ã` não entram. A quebra por
+`\w` em JavaScript é `[A-Za-z0-9_]`: `ç` e `ã` não entram. A quebra por
 não-palavra cortava toda palavra acentuada no primeiro acento: `conexão` virava
 `conex`, `validação` virava `valida`, `função` virava `fun`. E como o termo
 truncado ficava com menos de 8 caracteres, ele também perdia a busca por
@@ -329,7 +329,7 @@ estava fora de sintonia. `stripDiacritics` normaliza antes de quebrar.
 
 ## 13. Nome de arquivo precisa de consulta própria
 
-Ainda na mesma tarefa, os dois arquivos óbvios — o arquivo da tela e o seu controller — apareciam nas **posições 76 e 77** do FTS, com
+Ainda na mesma tarefa, os dois arquivos óbvios: o arquivo da tela e o seu controller, apareciam nas **posições 76 e 77** do FTS, com
 limite de 40 sementes. Nunca entravam.
 
 A causa é estrutural, não um ajuste de peso: o bm25 normaliza por tamanho do
@@ -340,17 +340,17 @@ uma variável com três termos no total, sempre vence.
 O nome do arquivo costuma ser o indicador de assunto mais forte de um código, e
 afogá-lo num índice ponderado por tamanho é perder o sinal mais barato que
 existe. `findFilesByPathTerms` é uma fonte de sementes separada, por `LIKE` no
-caminho — com o mesmo truncamento de prefixo do FTS, porque `LIKE '%singular%'`
+caminho: com o mesmo truncamento de prefixo do FTS, porque `LIKE '%singular%'`
 não casa com o plural.
 
-## 14. Intenção não é assunto — nem como símbolo
+## 14. Intenção não é assunto, nem como símbolo
 
 Duas manifestações do mesmo erro, encontradas na mesma consulta:
 
 1. `"Validar"`, no início da frase, casava com a regra de PascalCase de uma
    palavra e era tratado como **identificador citado**. Isso deu casamento de
    símbolo perfeito com um uma função homônima de um arquivo sem relação nenhuma
-   com a tarefa — primeiro lugar no ranking, score 67.
+   com a tarefa: primeiro lugar no ranking, score 67.
 2. A tabela de afinidade de `UNKNOWN` era **vazia**, então toda tarefa não
    classificada caía num neutro único de 0,5 e variável de módulo competia de
    igual para igual com função. uma variável local de um controlador,
@@ -362,13 +362,13 @@ entrada própria.
 
 ## 15. Espalhar é pior que concentrar
 
-O pacote cobria **40 arquivos** com 89 entidades — ~85 tokens cada. Isso não é
+O pacote cobria **40 arquivos** com 89 entidades: ~85 tokens cada. Isso não é
 contexto abrangente, é confete: nenhum arquivo recebe o suficiente para ser
 compreendido.
 
 Um teto de 12 arquivos distintos, com o orçamento concentrado neles, tem duas
 vantagens sobre espalhar. Cada arquivo incluído fica legível. E um pacote focado
-*errado* é visivelmente errado — o usuário percebe e usa `--include`; um pacote
+*errado* é visivelmente errado: o usuário percebe e usa `--include`; um pacote
 difuso parece plausível e desperdiça a rodada.
 
 ### Antes e depois, mesma consulta
