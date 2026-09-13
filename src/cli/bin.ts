@@ -91,7 +91,7 @@ export async function readIncludes(
     try {
       content = await readFile(fromFile, 'utf8');
     } catch (error) {
-      if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
+      if (error && typeof error === 'object' && 'code' in error && (error as { code?: string }).code === 'ENOENT') {
         throw new PilError(
           'CONFIG_INVALID',
           `arquivo de lista não encontrado: ${fromFile}`,
@@ -111,7 +111,7 @@ export async function readIncludes(
       }
     }
 
-    if (filePathsCount === 0) {
+    if (filePathsCount === 0 && paths.length === 0) {
       throw new PilError(
         'CONFIG_INVALID',
         `arquivo de lista está vazio: ${fromFile}`,
